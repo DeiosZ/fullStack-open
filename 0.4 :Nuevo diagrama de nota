@@ -1,0 +1,23 @@
+# Ejercicio 0.4 
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    server-->>browser: CSS file
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    server-->>browser: JavaScript file
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: JSON [{ "content": "Mi nota está aquí", "date": "2025-08-28" }, ... ]
+    desactivate server
+
+
+
