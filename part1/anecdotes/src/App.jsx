@@ -25,22 +25,43 @@ const App = () => {
     const r = Math.floor(Math.random() * anecdotes.length)
     setSelected(r)
   }
-  const [votes,setVotes] = useState({0:1,1:3,2:5,3:7,4:9,5:11,6:13,7:15})
+  const [votes,setVotes] = useState(new Array(anecdotes.length).fill(0))
   const handleVote=()=>{
     console.log(votes,"se hizo 1 click")
-    setVotes(p=>({...p,[selected]:p[selected]+1}))
-    
+    setVotes(p=>p.map((vote, index) => index === selected ? vote + 1 : vote))
+  }
+
+  let maxVotes = 0
+  let topIndices =[]
+  for (let i = 0; i < votes.length; i++) {
+    if (votes[i] > maxVotes) {
+      maxVotes = votes[i]
+    }
+  }
+  for(let i =0 ;i<votes.length;i++){
+    if(votes[i]===maxVotes){
+      topIndices.push(i)
+    }
   }
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <br />
       <p>has {votes[selected]} votes</p>
       <br />
       <Button onClick={handleVote} text ="vote"/>
-      
       <Button onClick ={handleClick} text='Next anecdote'/>
+      <br />
+      <h2>Anecdote with most votes</h2>
+      {maxVotes ===0 ? (<p>No votes</p>):(topIndices.map(i => (
+        <div key={i}>
+          <p>{anecdotes[i]}</p>
+          <p>has {votes[i]} votes</p>
+        </div>
+      ))
+    )}
     </div>
   )
 }
